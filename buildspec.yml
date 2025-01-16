@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2
+      - echo Pre-build phase completed.
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - docker build -t crawler_image:latest .
+      - docker tag crawler_image:latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2:latest
+      - echo Docker image build and tag completed.
+
+  post_build:
+    commands:
+      - echo Pushing the Docker image to ECR...
+      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2:latest
+      - echo Docker image pushed to ECR successfully.
+      - echo Deploying to EKS...
+      - aws eks update-kubeconfig --region ap-northeast-2 --name test3
+      - kubectl apply -f deployment.yaml
+      - echo Deployment completed successfully on `date`.
+
+artifacts:
+  files:
+    - deployment.yaml
