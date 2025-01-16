@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spotrank-fe-service  # 서비스 이름
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"  # NLB(Network Load Balancer) 설정
+spec:
+  selector:
+    app: spotrank-fe         # Deployment와 일치
+  ports:
+    - protocol: TCP
+      port: 80              # 외부에서 접근할 포트 (HTTP)
+      targetPort: 80        # 컨테이너 내부 포트
+  type: LoadBalancer         # AWS ELB를 생성
