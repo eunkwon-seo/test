@@ -1,0 +1,24 @@
+version: '3.10'
+
+services:
+  crawler:
+    build:
+      context: .
+    container_name: crawler_container
+    image: crawler_image
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["bash", "run_all.sh"]
+    depends_on:
+      - dynamodb
+    environment:
+      - AWS_REGION=ap-northeast-2
+    env_file:
+      - .env
+
+  dynamodb:
+    image: amazon/dynamodb-local
+    container_name: dynamodb_local
+    ports:
+      - "8000:8000"
