@@ -1,29 +1,41 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      docker: 19
+    commands:
+      - echo Installing prerequisites...
+      - curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.6/2023-10-17/bin/linux/amd64/kubectl
+      - chmod +x ./kubectl
+      - mv ./kubectl /usr/local/bin/kubectl
+      - mkdir -p ~/.kube
+      - echo Setting up kubeconfig for EKS...
+      - aws eks --region ap-northeast-2 update-kubeconfig --name test3
+      - echo Verifying Kubernetes access...
+      - kubectl get pods --all-namespaces
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2
-      - echo Pre-build phase completed.
-
+      - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com
+      - echo Pre-build step completed.
   build:
     commands:
-      - echo Build started on `date`
-      - docker build -t crawler_image:latest .
-      - docker tag crawler_image:latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2:latest
-      - echo Docker image build and tag completed.
-
+      - echo Building the Docker image...
+      - docker build -t test2:latest .
+      - docker tag test2:latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2:latest
+      - echo Pushing Docker image to ECR...
+      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2:latest
   post_build:
     commands:
-      - echo Pushing the Docker image to ECR...
-      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2:latest
-      - echo Docker image pushed to ECR successfully.
-      - echo Deploying to EKS...
-      - aws eks update-kubeconfig --region ap-northeast-2 --name test3
-      - kubectl apply -f deployment.yaml
-      - echo Deployment completed successfully on `date`.
+      - echo Deploying application to EKS...
+      - export AWS_ECR_URI=205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2:latest
+      - sed -i.bak 's#AWS_ECR_URI#'"$AWS_ECR_URI"'#g' ./EKS/Deployment.yaml
+      - kubectl apply -f ./EKS/Deployment.yaml
+      - kubectl apply -f ./EKS/Service.yaml
+      - echo Deployment completed on $(date).
 
 artifacts:
   files:
-    - deployment.yaml
+    - EKS/Deployment.yaml
+    - EKS/Service.yaml
