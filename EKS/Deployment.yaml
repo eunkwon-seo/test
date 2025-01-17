@@ -2,22 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: eks-deploy
+  labels: # Service와 일치하는 레이블 추가
+    app: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: eks-test
+      app: frontend
   template:
     metadata:
       labels:
-        app: eks-test
+        app: frontend # Service와 일치
     spec:
       containers:
         - name: eks-test
           image: AWS_ECR_URI # CodeBuild에서 실제 이미지 URL로 치환
           ports:
             - containerPort: 80
-          imagePullPolicy: Always # 항상 최신 이미지를 가져옴
+          imagePullPolicy: Always
           env:
             - name: DATE
               value: DATE_STRING # CodeBuild에서 현재 날짜로 치환
