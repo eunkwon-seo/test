@@ -6,10 +6,11 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: "alb"  # ALB 생성 지정
     service.beta.kubernetes.io/aws-load-balancer-internal: "false" # 인터넷 노출 여부
 spec:
-  type: LoadBalancer
-  selector:
-    app: frontend
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+    - name: "http"
+      protocol: TCP
+      port: 80         # 외부에서 접근하는 포트
+      targetPort: 80   # 컨테이너에서 노출하는 포트
+  selector:
+    app: frontend      # Deployment의 selector와 일치해야 함
+  type: LoadBalancer
