@@ -5,11 +5,6 @@ WORKDIR /app
 
 COPY package*.json ./
 
-# Sass와 Babel 문제를 해결하기 위해 의존성 설치
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
-    unzip awscliv2.zip && \
-    ./aws/install && \
-    rm -rf awscliv2.zip aws
 RUN npm install --legacy-peer-deps
 RUN npm install -g @aws-amplify/cli
 RUN npm install ajv ajv-keywords
