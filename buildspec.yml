@@ -23,7 +23,7 @@ phases:
       - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com
       - echo Fetching parameters from AWS Systems Manager Parameter Store...
       - export REACT_APP_AWS_PROJECT_REGION=$(aws ssm get-parameter --name "REACT_APP_AWS_PROJECT_REGION" --with-decryption --query "Parameter.Value" --output text)
-      - echo "REACT_APP_AWS_PROJECT_REGION: $REACT_APP_AWS_PROJECT_REGION"
+      - echo REACT_APP_AWS_PROJECT_REGION: $REACT_APP_AWS_PROJECT_REGION
       - export REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=$(aws ssm get-parameter --name "REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID" --with-decryption --query "Parameter.Value" --output text)
       - export REACT_APP_AWS_USER_POOLS_ID=$(aws ssm get-parameter --name "REACT_APP_AWS_USER_POOLS_ID" --with-decryption --query "Parameter.Value" --output text)
       - export REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=$(aws ssm get-parameter --name "REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID" --with-decryption --query "Parameter.Value" --output text)
