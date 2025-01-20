@@ -11,7 +11,11 @@ RUN npm install -g @aws-amplify/cli
 RUN npm install ajv ajv-keywords
 RUN npm install amazon-cognito-identity-js
 RUN npm install jwt-decode
-
+# AWS CLI 설치
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && sudo ./aws/install \
+    && rm -rf awscliv2.zip aws
 COPY . .
 
 RUN npm run build
