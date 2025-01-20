@@ -21,3 +21,12 @@ spec:
           env:
             - name: DATE
               value: DATE_STRING # CodeBuild에서 현재 날짜로 치환
+          command:
+            - sh
+            - -c
+            - |
+              export REACT_APP_AWS_PROJECT_REGION=$(aws ssm get-parameter --name "REACT_APP_AWS_PROJECT_REGION" --with-decryption --query "Parameter.Value" --output text) &&
+              export REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=$(aws ssm get-parameter --name "REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID" --with-decryption --query "Parameter.Value" --output text) &&
+              export REACT_APP_AWS_USER_POOLS_ID=$(aws ssm get-parameter --name "REACT_APP_AWS_USER_POOLS_ID" --with-decryption --query "Parameter.Value" --output text) &&
+              export REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=$(aws ssm get-parameter --name "REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID" --with-decryption --query "Parameter.Value" --output text) &&
+              exec your-app-command
