@@ -28,11 +28,10 @@ phases:
       - export REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=$(aws ssm get-parameter --name "REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID" --with-decryption --query "Parameter.Value" --output text)
       - echo Creating Kubernetes Secrets...
       - kubectl delete secret app-secrets || true
-      - kubectl create secret generic app-secrets \
-        --from-literal=REACT_APP_AWS_PROJECT_REGION=$REACT_APP_AWS_PROJECT_REGION \
-        --from-literal=REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=$REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID \
-        --from-literal=REACT_APP_AWS_USER_POOLS_ID=$REACT_APP_AWS_USER_POOLS_ID \
-        --from-literal=REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=$REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID
+      - kubectl create secret generic app-secrets --from-literal=REACT_APP_AWS_PROJECT_REGION=$REACT_APP_AWS_PROJECT_REGION
+      - kubectl create secret generic app-secrets --from-literal=REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=$REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID
+      - kubectl create secret generic app-secrets --from-literal=REACT_APP_AWS_USER_POOLS_ID=$REACT_APP_AWS_USER_POOLS_ID
+      - kubectl create secret generic app-secrets --from-literal=REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=$REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID
       - echo Pre-build step completed.
 
   build:
