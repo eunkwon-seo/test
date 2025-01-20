@@ -35,7 +35,8 @@ phases:
   build:
     commands:
       - echo Building the Docker image...
-      - docker build -t test2:latest \
+      - |
+        docker build -t test2:latest \
         --build-arg REACT_APP_AWS_PROJECT_REGION=$REACT_APP_AWS_PROJECT_REGION \
         --build-arg REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=$REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID \
         --build-arg REACT_APP_AWS_USER_POOLS_ID=$REACT_APP_AWS_USER_POOLS_ID \
