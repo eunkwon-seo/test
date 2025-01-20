@@ -43,7 +43,7 @@ phases:
         --build-arg REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=$REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID \
         --build-arg REACT_APP_AWS_USER_POOLS_ID=$REACT_APP_AWS_USER_POOLS_ID \
         --build-arg REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=$REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID \
-      .
+       .
       - docker tag test2:latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2:latest
       - echo Pushing Docker image to ECR...
       - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/test2:latest
