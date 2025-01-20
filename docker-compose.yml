@@ -12,7 +12,7 @@ services:
       - REACT_APP_AWS_PROJECT_REGION=ap-northeast-2
       - REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID:${{secrets.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID}}
       - REACT_APP_AWS_USER_POOLS_ID:${{secrets.REACT_APP_AWS_USER_POOLS_ID}}
-      - REACT_APP_AWS_USER_POOLS...
+      - REACT_APP_AWS_USER_POOLS:${{secrets.REACT_APP_AWS_USER_POOLS_ID}}
     volumes:
       - .:/app
     stdin_open: true
