@@ -19,6 +19,8 @@ spec:
             - containerPort: 80
           imagePullPolicy: Always # 항상 최신 이미지를 가져옴
           env:
+            - name: DATE
+              value: DATE_STRING # CodeBuild에서 현재 날짜로 치환
             - name: REACT_APP_AWS_PROJECT_REGION
               valueFrom:
                 secretKeyRef:
