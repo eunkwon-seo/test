@@ -9,6 +9,10 @@ services:
       - "3000:80" # 로컬의 3000번 포트를 컨테이너의 80번 포트에 매핑
     environment:
       - REACT_APP_API_URL=http://localhost:5000 # 환경 변수 예시 (백엔드와 연동 시 필요)
+      - REACT_APP_AWS_PROJECT_REGION=ap-northeast-2
+      - REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID:${{secrets.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID}}
+      - REACT_APP_AWS_USER_POOLS_ID:${{secrets.REACT_APP_AWS_USER_POOLS_ID}}
+      - REACT_APP_AWS_USER_POOLS...
     volumes:
       - .:/app
     stdin_open: true
