@@ -6,6 +6,9 @@ WORKDIR /app
 COPY package*.json ./
 
 # Sass와 Babel 문제를 해결하기 위해 의존성 설치
+RUN yum install -y aws-cli \
+    unzip && \
+    yum clean all
 RUN npm install --legacy-peer-deps
 RUN npm install -g @aws-amplify/cli
 RUN npm install ajv ajv-keywords
