@@ -50,3 +50,9 @@ phases:
       - kubectl apply -f ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Service.yaml
       - echo Deployment completed on $(date).
+
+artifacts:
+  files:
+    - EKS/Deployment.yaml
+    - EKS/Service.yaml
+
