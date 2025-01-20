@@ -11,7 +11,11 @@ RUN npm install -g @aws-amplify/cli
 RUN npm install ajv ajv-keywords
 RUN npm install amazon-cognito-identity-js
 RUN npm install jwt-decode
-RUN yum install aws-cli
+RUN yum update -y && \
+    yum install -y \
+    aws-cli \
+    unzip && \
+    yum clean all
 
 COPY . .
 
