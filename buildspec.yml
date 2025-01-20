@@ -31,7 +31,7 @@ phases:
           --from-literal=REACT_APP_AWS_PROJECT_REGION=$REACT_APP_AWS_PROJECT_REGION \
           --from-literal=REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=$REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID \
           --from-literal=REACT_APP_AWS_USER_POOLS_ID=$REACT_APP_AWS_USER_POOLS_ID \
-          --from-literal=REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=$REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID || echo "Secrets already exist, skipping."
+          --from-literal=REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=$REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID || echo "Secret already exists, skipping."
       - echo Pre-build step completed.
 
   build:
@@ -50,8 +50,3 @@ phases:
       - kubectl apply -f ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Service.yaml
       - echo Deployment completed on $(date).
-
-artifacts:
-  files:
-    - EKS/Deployment.yaml
-    - EKS/Service.yaml
