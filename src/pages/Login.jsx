@@ -9,7 +9,7 @@ const poolData = {
     UserPoolId: process.env.REACT_APP_AWS_USER_POOLS_ID || 'default-user-pool-id',
     ClientId: process.env.REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID || 'default-client-id',
 };
-
+console.log('poolData 확인:', poolData);
 const userPool = new CognitoUserPool(poolData);
 
 const Login = () => {
