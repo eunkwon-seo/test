@@ -13,4 +13,4 @@ spec:
       targetPort: 80   # 컨테이너에서 노출하는 포트
   selector:
     app: frontend      # Deployment의 selector와 일치해야 함
-  type: LoadBalancer
+  type: ClusterIP
