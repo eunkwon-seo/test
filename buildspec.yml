@@ -59,10 +59,11 @@ phases:
       - sed -i.bak 's#AWS_ECR_URI#'"$AWS_ECR_URI"'#g' ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Service.yaml
+      - kubectl apply -f ./EKS/frontend-ingress.yaml
       - echo Deployment completed on $(date).
 
 artifacts:
   files:
     - EKS/Deployment.yaml
     - EKS/Service.yaml
-
+    - EKS/frontend-ingress.yaml
