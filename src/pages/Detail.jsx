@@ -19,7 +19,7 @@ const Detail = () => {
         const fetchShowDetail = async () => {
             try {
                 setLoading(true);
-                const response = await fetch(`http://localhost:5005/api/performances/${id}`);
+                const response = await fetch(`http://performance-service.default.svc.cluster.local:5005/api/performances/${id}`);
                 if (!response.ok) {
                     throw new Error('공연 정보를 가져오는데 실패했습니다.');
                 }
@@ -29,7 +29,7 @@ const Detail = () => {
                 // 즐겨찾기 상태 확인 (5004 포트 사용)
                 try {
                     const { username } = await getCurrentUser();
-                    const favResponse = await fetch(`http://localhost:5004/api/favorites/${username}`);
+                    const favResponse = await fetch(`http://favorite-service.default.svc.cluster.local:5004/api/favorites/${username}`);
                     if (favResponse.ok) {
                         const favorites = await favResponse.json();
                         setIsFavorite(favorites.some(fav => fav.performance_id === id));
@@ -100,13 +100,13 @@ const Detail = () => {
             }
 
             if (isFavorite) {
-                const response = await fetch(`http://localhost:5004/api/favorites/${username}/${showDetail.performance_id}`, {
+                const response = await fetch(`http://favorite-service.default.svc.cluster.local:5004/api/favorites/${username}/${showDetail.performance_id}`, {
                     method: 'DELETE'
                 });
 
                 if (!response.ok) throw new Error('즐겨찾기 삭제 실패');
             } else {
-                const response = await fetch(`http://localhost:5004/api/favorites/${username}`, {
+                const response = await fetch(`http://favorite-service.default.svc.cluster.local:5004/api/favorites/${username}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -33,7 +33,7 @@ const Home = () => {
             if (loading) return;
 
             try {
-                const response = await fetch('http://localhost:5005/api/performances');
+                const response = await fetch('http://performances-service.default.svc.cluster.local:5005/api/performances');
                 const data = await response.json();
 
                 let performancesData = {
@@ -61,7 +61,7 @@ const Home = () => {
                 if (isAuthenticated) {
                     try {
                         const { username } = await getCurrentUser();
-                        const favoritesResponse = await fetch(`http://localhost:5004/api/favorites/${username}`);
+                        const favoritesResponse = await fetch(`http://favorite-service.default.svc.cluster.local:5004/api/favorites/${username}`);
                         if (favoritesResponse.ok) {
                             const favoritesData = await favoritesResponse.json();
                             setFavorites(favoritesData);
@@ -95,14 +95,14 @@ const Home = () => {
             const isAlreadyFavorite = favorites.some(fav => fav.performance_id === show.performance_id);
 
             if (isAlreadyFavorite) {
-                const response = await fetch(`http://localhost:5004/api/favorites/${username}/${show.performance_id}`, {
+                const response = await fetch(`http://favorite-service.default.svc.cluster.local:5004/api/favorites/${username}/${show.performance_id}`, {
                     method: 'DELETE'
                 });
 
                 if (!response.ok) throw new Error('즐겨찾기 삭제 실패');
                 setFavorites(favorites.filter(fav => fav.performance_id !== show.performance_id));
             } else {
-                const response = await fetch(`http://localhost:5004/api/favorites/${username}`, {
+                const response = await fetch(`http://favorite-service.default.svc.cluster.local:5004/api/favorites/${username}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

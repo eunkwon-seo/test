@@ -19,7 +19,7 @@ const Search = () => {
             if (query) {
                 setLoading(true);
                 try {
-                    const url = new URL('http://localhost:5006/api/search');
+                    const url = new URL('http://search-service.default.svc.cluster.local:5006/api/search');
                     url.searchParams.append('query', query);
                     const response = await fetch(url);
                     

@@ -24,7 +24,7 @@ const PreferencesMovies = () => {
 
   const searchMovies = async (query) => {
     try {
-      const response = await fetch(`http://localhost:5003/api/survey/movies/search?query=${query}`);
+      const response = await fetch(`http://survey-service.default.svc.cluster.local:5003/api/survey/movies/search?query=${query}`);
       if (!response.ok) throw new Error('검색 실패');
       const data = await response.json();
       console.log('response movie data 확인:', data);
