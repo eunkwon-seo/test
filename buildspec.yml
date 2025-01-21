@@ -56,4 +56,5 @@ artifacts:
   files:
     - EKS/Deployment.yaml
     - EKS/Service.yaml
+    - EKS/frontend-ingress.yaml
 
