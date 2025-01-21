@@ -8,7 +8,6 @@ metadata:
     alb.ingress.kubernetes.io/target-type: "ip"                  # Pod의 IP를 직접 대상으로 사용
 spec:
   rules:
-    - host: ticket101.kr
     - http:
         paths:
           - path: /
