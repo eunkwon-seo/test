@@ -23,10 +23,13 @@ phases:
       - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com
       - echo Fetching parameters from AWS Systems Manager Parameter Store...
       - export REACT_APP_AWS_PROJECT_REGION=$(aws ssm get-parameter --name "REACT_APP_AWS_PROJECT_REGION" --with-decryption --query "Parameter.Value" --output text)
-      - echo env parameter test... $REACT_APP_AWS_PROJECT_REGION
+      - echo env parameter testREACT_APP_AWS_PROJECT_REGION... $REACT_APP_AWS_PROJECT_REGION
       - export REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=$(aws ssm get-parameter --name "REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID" --with-decryption --query "Parameter.Value" --output text)
+      - echo env parameter test REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID... $REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID
       - export REACT_APP_AWS_USER_POOLS_ID=$(aws ssm get-parameter --name "REACT_APP_AWS_USER_POOLS_ID" --with-decryption --query "Parameter.Value" --output text)
+      - echo env parameter test REACT_APP_AWS_USER_POOLS_ID... $REACT_APP_AWS_USER_POOLS_ID
       - export REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=$(aws ssm get-parameter --name "REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID" --with-decryption --query "Parameter.Value" --output text)
+      - echo env parameter test REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID... $REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID
       - echo Creating Kubernetes Secrets...
       - kubectl delete secret app-secrets || true
       - kubectl create secret generic app-secrets --from-literal=REACT_APP_AWS_PROJECT_REGION=$REACT_APP_AWS_PROJECT_REGION --from-literal=REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID=$REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID --from-literal=REACT_APP_AWS_USER_POOLS_ID=$REACT_APP_AWS_USER_POOLS_ID --from-literal=REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID=$REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID
