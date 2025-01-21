@@ -12,6 +12,8 @@ spec:
       labels:
         app: frontend
     spec:
+      nodeSelector:
+          role: frontend
       containers:
         - name: frontend
           image: AWS_ECR_URI # CodeBuild에서 실제 이미지 URL로 치환
