@@ -12,4 +12,4 @@ spec:
       targetPort: 80   # 컨테이너에서 노출하는 포트
   selector:
     app: eks-test      # Deployment의 selector와 일치해야 함
-  type: LoadBalancer   # AWS ELB를 통해 외부 트래픽을 노출
+  type: ClusterIP   # AWS ELB를 통해 외부 트래픽을 노출
