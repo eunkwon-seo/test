@@ -26,7 +26,7 @@ const PreferencesArtists = () => {
         throw new Error('검색어는 2글자 이상 입력해주세요.');
       }
 
-      const response = await fetch(`http://survey-service.default.svc.cluster.local:5003/api/survey/artists/search?query=${query}`);
+      const response = await fetch(`http://survey-service:80/api/survey/artists/search?query=${query}`);
       const data = await response.json();
       
       // 서버 응답 확인
