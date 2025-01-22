@@ -48,6 +48,4 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
-                  key: BACKEND_URL
-                  value: "http://internal-k8s-default-backendi-87ea846096-1600605264.ap-northeast-2.elb.amazonaws.com"
-                  
+                  key: BACKEND_URL              
