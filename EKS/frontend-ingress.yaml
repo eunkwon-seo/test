@@ -9,7 +9,8 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - http:
+    - host: ticket101.kr               
+      http:
         paths:
           - path: /
             pathType: Prefix
