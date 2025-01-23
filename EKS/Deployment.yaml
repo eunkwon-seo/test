@@ -43,6 +43,8 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID
+            - name: BACKEND_API_URL
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
+                  key: "http://api.ticket101.kr"
