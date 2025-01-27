@@ -3,11 +3,12 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Installing prerequisites...
-      - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-      - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-      - export AWS_ACCOUNT_ID=$AWS_ACCOUNT_ID
-      - export AWS_REGION=$AWS_DEFAULT_REGION
+      - echo Installing kubectl...
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_ACCOUNT_ID=$AWS_ACCOUNT_ID
+      - AWS_REGION=$AWS_DEFAULT_REGION
+
       - curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.6/2023-10-17/bin/linux/amd64/kubectl
       - chmod +x ./kubectl
       - mv ./kubectl /usr/local/bin/kubectl
@@ -15,33 +16,33 @@ phases:
       - echo Setting up kubeconfig for EKS...
       - aws eks --region ap-northeast-2 update-kubeconfig --name ticket101-cluster
       - echo Verifying Kubernetes access...
-      - kubectl get pods --all-namespaces
+      - kubectl version --client
+      
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com
       - echo Pre-build step completed.
       
-      - echo Fetching environment variables from SSM...
       - export ACCESS_KEY_ID=$(aws ssm get-parameter --name "ACCESS_KEY_ID" --with-decryption --query "Parameter.Value" --output text)
-      - export SECRET_ACCESS_KEY=$(aws ssm get-parameter --name "SECRET_ACCESS_KEY" --with-decryption --query "Parameter.Value" --output text)
+      - echo env parameter ACCESS_KEY_ID... $ACCESS_KEY_ID
 
-      - echo "ACCESS_KEY_ID: $ACCESS_KEY_ID"
-      - echo "SECRET_ACCESS_KEY: $SECRET_ACCESS_KEY"
+      - export SECRET_ACCESS_KEY=$(aws ssm get-parameter --name "SECRET_ACCESS_KEY" --with-decryption --query "Parameter.Value" --output text)
+      - echo env parameter SECRET_ACCESS_KEY... $SECRET_ACCESS_KEY
 
       - kubectl delete secret app-secrets2 || true
       - kubectl create secret generic app-secrets2 --from-literal=ACCESS_KEY_ID=$ACCESS_KEY_ID --from-literal=SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
+  
   build:
     commands:
       - echo Building and pushing Docker images to ticket101-ecr...
-      - docker build --no-cache -t ticket101-ecr:latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY .
+      - docker build --no-cache -t ticket101-ecr:auth-latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY .
       - docker tag ticket101-ecr:latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
       - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
   
   post_build:
     commands:
       - echo Deploying auth service...
-      - export AWS_ECR_URI=205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
       - cat ./EKS/Deployment.yaml  # 디버깅 출력 추가
       - kubectl apply -f ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Service.yaml
