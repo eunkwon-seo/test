@@ -4,23 +4,23 @@ metadata:
   name: eks-crawler
   namespace: default
   labels:
-    app: eks-test
+    app: eks-crawler
     environment: production
     version: v1.0.0
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: eks-test
+      app: eks-crawler
   template:
     metadata:
       labels:
-        app: eks-test
+        app: eks-crawler
     spec:
       nodeSelector:
           role: backend
       containers:
-        - name: eks-test
+        - name: eks-crawler
           image: 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
           imagePullPolicy: Always
           ports:
