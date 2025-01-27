@@ -21,9 +21,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com
       - echo Pre-build step completed.
-      - export FRONTEND_URL=$(aws ssm get-parameter --name "FRONTEND_URL" --with-decryption --query "Parameter.Value" --output text)
-      - echo env parameter FRONTEND_URL... $FRONTEND_URL
-
+      
       - export ACCESS_KEY_ID=$(aws ssm get-parameter --name "ACCESS_KEY_ID" --with-decryption --query "Parameter.Value" --output text)
       - echo env parameter ACCESS_KEY_ID... $ACCESS_KEY_ID
 
