@@ -15,7 +15,7 @@ phases:
       - echo Setting up kubeconfig for EKS...
       - aws eks --region ap-northeast-2 update-kubeconfig --name ticket101-cluster
       - echo Verifying Kubernetes access...
-      - kubectl get pods --all-namespaces
+      - kubectl version --client
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -34,7 +34,6 @@ phases:
       - kubectl create secret generic app-secrets2 --from-literal=ACCESS_KEY_ID=$ACCESS_KEY_ID --from-literal=SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY --from-literal=FRONTEND_URL=$FRONTEND_URL
   build:
     commands:
-      commands:
       - echo Building and pushing Docker images to ticket101-ecr...
 
       - echo Building auth service...
@@ -61,6 +60,7 @@ phases:
       - docker build --no-cache -t ticket101-ecr:survey-latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY --build-arg FRONTEND_URL=$FRONTEND_URL ./backend/survey
       - docker tag ticket101-ecr:survey-latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:survey-latest
       - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:survey-latest
+  
   post_build:
     commands:
      - echo Deploying auth service...
