@@ -35,7 +35,7 @@ phases:
       - echo Building and pushing Docker images to ticket101-ecr...
 
       - echo Building auth service...
-      - docker build --no-cache -t ticket101-ecr:latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID
+      - docker build --no-cache -t ticket101-ecr:latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
       - docker tag ticket101-ecr:latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
       - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
   
