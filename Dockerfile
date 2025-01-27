@@ -21,6 +21,12 @@ RUN pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir playwright && \
     playwright install --with-deps
 
+ARG ACCESS_KEY_ID
+ENV ACCESS_KEY_ID=$ACCESS_KEY_ID
+
+ARG SECRET_ACCESS_KEY
+ENV SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
+
 # 프로젝트 복사
 COPY . .
 
