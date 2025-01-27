@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latestapiVersion: apps/v1
 kind: Deployment
 metadata:
   name: eks-crawler
@@ -21,7 +21,7 @@ spec:
           role: backend
       containers:
         - name: eks-test
-          image: 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:auth-latest
+          image: 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5007
