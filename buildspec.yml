@@ -4,6 +4,10 @@ phases:
   install:
     commands:
       - echo Installing prerequisites...
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_ACCOUNT_ID=$AWS_ACCOUNT_ID
+      - AWS_REGION=$AWS_DEFAULT_REGION
       - curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.6/2023-10-17/bin/linux/amd64/kubectl
       - chmod +x ./kubectl
       - mv ./kubectl /usr/local/bin/kubectl
@@ -11,7 +15,7 @@ phases:
       - echo Setting up kubeconfig for EKS...
       - aws eks --region ap-northeast-2 update-kubeconfig --name ticket101-cluster
       - echo Verifying Kubernetes access...
-      - kubectl version --client
+      - kubectl get pods --all-namespaces
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -37,6 +41,8 @@ phases:
   post_build:
     commands:
       - echo Deploying auth service...
+      - export AWS_ECR_URI=205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
+      - sed -i.bak 's#AWS_ECR_URI#'"$AWS_ECR_URI"'#g' ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Service.yaml
       - kubectl apply -f ./EKS/CronJob.yaml
