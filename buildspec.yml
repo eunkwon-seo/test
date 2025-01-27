@@ -29,7 +29,7 @@ phases:
       - echo env parameter SECRET_ACCESS_KEY... $SECRET_ACCESS_KEY
 
       - kubectl delete secret app-secrets2 || true
-      - kubectl create secret generic app-secrets2 --from-literal=ACCESS_KEY_ID=$ACCESS_KEY_ID --from-literal=SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY --from-literal=FRONTEND_URL=$FRONTEND_URL
+      - kubectl create secret generic app-secrets2 --from-literal=ACCESS_KEY_ID=$ACCESS_KEY_ID --from-literal=SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
   build:
     commands:
       - echo Building and pushing Docker images to ticket101-ecr...
