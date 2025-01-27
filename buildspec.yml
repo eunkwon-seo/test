@@ -37,29 +37,9 @@ phases:
       - echo Building and pushing Docker images to ticket101-ecr...
 
       - echo Building auth service...
-      - docker build --no-cache -t ticket101-ecr:auth-latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY --build-arg FRONTEND_URL=$FRONTEND_URL ./backend/auth
-      - docker tag ticket101-ecr:auth-latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:auth-latest
-      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:auth-latest
-
-      - echo Building favorite service...
-      - docker build --no-cache -t ticket101-ecr:favorite-latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY --build-arg FRONTEND_URL=$FRONTEND_URL ./backend/favorite
-      - docker tag ticket101-ecr:favorite-latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:favorite-latest
-      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:favorite-latest
-
-      - echo Building performance service...
-      - docker build --no-cache -t ticket101-ecr:performance-latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY --build-arg FRONTEND_URL=$FRONTEND_URL ./backend/performance
-      - docker tag ticket101-ecr:performance-latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:performance-latest
-      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:performance-latest
-
-      - echo Building search service...
-      - docker build --no-cache -t ticket101-ecr:search-latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY --build-arg FRONTEND_URL=$FRONTEND_URL ./backend/search
-      - docker tag ticket101-ecr:search-latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:search-latest
-      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:search-latest
-
-      - echo Building survey service...
-      - docker build --no-cache -t ticket101-ecr:survey-latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY --build-arg FRONTEND_URL=$FRONTEND_URL ./backend/survey
-      - docker tag ticket101-ecr:survey-latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:survey-latest
-      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:survey-latest
+      - docker build --no-cache -t ticket101-ecr:latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID
+      - docker tag ticket101-ecr:latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
+      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
   
   post_build:
     commands:
