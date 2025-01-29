@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: eks-crawler # 서비스 이름
   labels:
-    app: eks-crawler # 서비스와 관련된 레이블 (Deployment와 일치해야 함)
+    app: crawler-service # 서비스와 관련된 레이블 (Deployment와 일치해야 함)
 spec:
   ports:
     - name: "http"
