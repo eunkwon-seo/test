@@ -1,12 +1,7 @@
-205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latestapiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: eks-crawler
-  namespace: default
-  labels:
-    app: eks-crawler
-    environment: production
-    version: v1.0.0
 spec:
   replicas: 1
   selector:
@@ -21,20 +16,20 @@ spec:
           role: backend
       containers:
         - name: eks-crawler
-          image: 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
-          imagePullPolicy: Always
+          image: AWS_ECR_URI # CodeBuild에서 실제 이미지 URL로 치환
           ports:
             - containerPort: 5007
+          imagePullPolicy: Always # 항상 최신 이미지를 가져옴
           env:
             - name: AWS_REGION
               value: ap-northeast-2 # 적절한 AWS 리전 값
             - name: ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: app-secrets2
+                  name: app-secrets3
                   key: ACCESS_KEY_ID
             - name: SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: app-secrets2
+                  name: app-secrets3
                   key: SECRET_ACCESS_KEY
