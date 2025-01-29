@@ -36,14 +36,15 @@ phases:
   build:
     commands:
       - echo Building and pushing Docker images to ticket101-ecr...
-      - docker build --no-cache -t ticket101-ecr:auth-latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY .
-      - docker tag ticket101-ecr:latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
-      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest
+      - docker build -t ticket101-ecr:crawler-latest --build-arg ACCESS_KEY_ID=$ACCESS_KEY_ID --build-arg SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY .
+      - docker tag ticket101-ecr:crawler-latest 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:crawler-latest
+      - docker push 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:crawler-latest
   
   post_build:
     commands:
       - echo Deploying auth service...
-      - cat ./EKS/Deployment.yaml  # 디버깅 출력 추가
+      - export AWS_ECR_URI=205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:crawler-latest
+      - sed -i.bak 's#AWS_ECR_URI#'"$AWS_ECR_URI"'#g' ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Service.yaml
       - kubectl apply -f ./EKS/CronJob.yaml
