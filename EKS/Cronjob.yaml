@@ -9,8 +9,8 @@ spec:
       template:
         spec:
           containers:
-          - name: crawler
-            image: 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:latest  # ECR의 Docker 이미지 URL
+          - name: eks-crawler
+            image: 205930629963.dkr.ecr.ap-northeast-2.amazonaws.com/ticket101-ecr:crawler-latest  # ECR의 Docker 이미지 URL
             imagePullPolicy: Always
             command: [ "/bin/bash", "-c", "bash /app/run_all.sh" ]  # 실행 스크립트 경로
           restartPolicy: OnFailure
