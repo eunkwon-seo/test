@@ -16,6 +16,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: eks-crawler
+                name: crawler-service
                 port:
                   number: 80
