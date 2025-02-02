@@ -47,12 +47,12 @@ phases:
       - sed -i.bak 's#AWS_ECR_URI#'"$AWS_ECR_URI"'#g' ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Deployment.yaml
       - kubectl apply -f ./EKS/Service.yaml
-      - kubectl apply -f ./EKS/CronJob.yaml
+      - kubectl apply -f ./EKS/Cronjob.yaml
       - kubectl apply -f ./EKS/Ingress.yaml
 
 artifacts:
   files:
     - EKS/Deployment.yaml
     - EKS/Service.yaml
-    - EKS/CronJob.yaml
+    - EKS/Cronjob.yaml
     - EKS/Ingress.yaml
